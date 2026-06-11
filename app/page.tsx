@@ -169,11 +169,7 @@ export default function Home() {
            <img
               src={aboutSlides[currentSlide].image}
               alt={aboutSlides[currentSlide].caption}
-              className={`w-full h-full transition-all duration-500 ${
-                aboutSlides[currentSlide].contain
-                  ? "object-contain p-4 bg-slate-100"
-                  : "object-cover"
-              }`}
+              className="w-full h-full object-cover transition-all duration-500"
             />
 
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
