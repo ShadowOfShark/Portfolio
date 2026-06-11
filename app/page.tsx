@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   FaEnvelope,
@@ -8,6 +8,46 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
+
+const miniProjects = [
+  {
+    title: "RAMQ RideShare App",
+    image: "/projects/RAMQ.jpg",
+    desc: "RAMQ RideShare Application and Architecture Design",
+    link: "https://github.com/quinnha/RAMQ",
+  },
+  {
+    title: "Revised_Narcotics_Control_Process_Map",
+    image: "/projects/omnicell.png",
+    desc: "Working with Hamilton Health-Sciences to rework Narcotics Control Process",
+    link: "https://github.com/ShadowOfShark/-Revised_Narctoics_Control_Process_Map",
+  },
+  {
+    title: "Portfolio Website",
+    image: "/projects/portfolio.png",
+    desc: "Building my own personal website, still under construction :D",
+    link: "https://github.com/ShadowOfShark/Portfolio",
+  },
+  {
+    title: "Customized Hip Implant",
+    image: "/projects/hip_implant_CAD.png",
+    desc: "Customized Hip Implant made by Autodesk CAD",
+    link: "https://github.com/ShadowOfShark/Customized_Hip_Implant",
+  },
+  {
+    title: "Remote Sterilization Container",
+    image: "/projects/Container_CAD1.png",
+    desc: "Designing a Sterlization Container for Remote Communities",
+    link: "https://github.com/ShadowOfShark/RemoteSterilizationContainer",
+  },
+   {
+    title: "Personal Monitoring Device",
+    image: "/projects/Monitor_Device_CAD.png",
+    desc: "Designing a Personal Monitoring Device for Muscle Atrophy",
+    link: "https://github.com/ShadowOfShark/Personal_Monitoring_Device",
+  },
+  
+];
 
 const aboutSlides = [
   {
@@ -104,10 +144,10 @@ export default function Home() {
 
               <div className="flex gap-4">
                 <a
-                  href="#selfie"
+                  href="#projects"
                   className="bg-cyan-400 text-slate-950 px-8 py-4 rounded-xl font-semibold hover:bg-cyan-300 transition"
                 >
-                  View Selfie Project
+                  View Project
                 </a>
 
                 <a
@@ -121,62 +161,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section id="projects" className="bg-white py-24">
-        <div className="max-w-6xl mx-auto px-8">
-          <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
-            Featured Project
-          </p>
-
-          <div id="selfie" className="border border-slate-200 rounded-3xl p-10 hover:shadow-xl transition">
-            <h2 className="text-4xl font-bold mb-4 text-slate-900">
-              Selfie Dental Health AI
-            </h2>
-
-            <p className="text-lg text-slate-600 mb-8 max-w-3xl">
-              A mobile application that combines image analysis and guided
-              questionnaires to provide non-diagnostic oral health risk
-              assessments and educational recommendations.
-            </p>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-8">
-              <div>
-                <h3 className="font-bold text-slate-900 mb-2">My Role</h3>
-                <p className="text-slate-600">
-                  Product design, UX research, frontend development, backend
-                  integration, and AI workflow planning.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-slate-900 mb-2">Tech Stack</h3>
-                <p className="text-slate-600">
-                  React Native, Expo, TypeScript, FastAPI, Python, AI/ML.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-bold text-slate-900 mb-2">Focus Area</h3>
-                <p className="text-slate-600">
-                  Healthcare accessibility, non-diagnostic screening, and
-                  mobile-first UX.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3 flex-wrap">
-              {["React Native", "FastAPI", "AI / ML", "Healthcare UX"].map(
-                (tag) => (
-                  <span key={tag} className="bg-cyan-100 text-cyan-800 px-4 py-2 rounded-full">
-                    {tag}
-                  </span>
-                )
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
+  
+{/* About Me */}
       <section id="about" className="bg-slate-50 py-24">
         <div className="max-w-6xl mx-auto px-8 grid md:grid-cols-2 gap-12 items-start">
           <div className="relative rounded-3xl overflow-hidden shadow-xl h-[550px]">
@@ -243,7 +229,171 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="bg-slate-950 text-white py-20">
+    
+
+      {/* Projects Section */}
+<section id="projects" className="scroll-mt-24 bg-white py-24">
+  <div className="max-w-6xl mx-auto px-8">
+    <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
+      Featured Project
+    </p>
+
+    <div className="border border-slate-200 rounded-3xl p-10 hover:shadow-xl transition">
+      {/* Title + Button */}
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+        <h2 className="text-4xl font-bold text-slate-900">
+          Selfie Dental Health AI
+        </h2>
+
+        <Link
+          href="/projects/selfie"
+          className="inline-flex items-center justify-center px-5 py-3 rounded-full bg-cyan-600 text-white font-medium hover:bg-cyan-700 transition whitespace-nowrap"
+        >
+          View Case Study →
+        </Link>
+      </div>
+
+      <p className="text-lg text-slate-600 mb-8 max-w-3xl">
+        A mobile application that combines image analysis and guided
+        questionnaires to provide non-diagnostic oral health risk assessments
+        and educational recommendations.
+      </p>
+
+      <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h3 className="font-bold text-slate-900 mb-2">My Role</h3>
+          <p className="text-slate-600">
+            Product design, UX research, frontend development, backend
+            integration, and AI workflow planning.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-bold text-slate-900 mb-2">Tech Stack</h3>
+          <p className="text-slate-600">
+            React Native, Expo, TypeScript, FastAPI, Python, AI/ML.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-bold text-slate-900 mb-2">Focus Area</h3>
+          <p className="text-slate-600">
+            Healthcare accessibility, non-diagnostic screening, and
+            mobile-first UX.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex gap-3 flex-wrap">
+        {["React Native", "FastAPI", "AI / ML", "Healthcare UX"].map((tag) => (
+          <span
+            key={tag}
+            className="bg-cyan-100 text-cyan-800 px-4 py-2 rounded-full"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    {/* Other Projects */}
+    <div className="mt-20">
+      <div className="mb-8">
+        <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-3">
+          Other Projects
+        </p>
+
+        <h2 className="text-3xl font-bold text-slate-900">
+          More Selected Work
+        </h2>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {miniProjects.map((project) => (
+          <a
+            key={project.title}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              group
+              relative
+              h-72
+              overflow-hidden
+              rounded-3xl
+              border
+              border-slate-200
+              bg-slate-100
+              shadow-sm
+              hover:shadow-xl
+              transition-all
+              duration-300
+            "
+          >
+            <img
+              src={project.image}
+              alt=""
+              className="
+                absolute
+                inset-0
+                h-full
+                w-full
+                object-cover
+                p-4
+                transition-transform
+                duration-700
+                group-hover:scale-105
+              "
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+
+            <div className="absolute bottom-0 left-0 right-0 p-6">
+              <h3 className="text-xl font-bold text-white mb-2">
+                {project.title}
+              </h3>
+
+              <p
+                className="
+                  text-sm
+                  text-slate-200
+                  opacity-0
+                  translate-y-2
+                  group-hover:opacity-100
+                  group-hover:translate-y-0
+                  transition-all
+                  duration-300
+                "
+              >
+                {project.desc}
+              </p>
+
+              <p
+                className="
+                  mt-3
+                  text-sm
+                  font-semibold
+                  text-cyan-200
+                  opacity-0
+                  translate-y-2
+                  group-hover:opacity-100
+                  group-hover:translate-y-0
+                  transition-all
+                  duration-500
+                "
+              >
+                View GitHub →
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* Contacts */}
+  <section id="contact" className="bg-slate-950 text-white py-20">
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="text-4xl font-bold mb-4">Let&apos;s Connect</h2>
 
@@ -272,6 +422,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+    
     </main>
   );
 }

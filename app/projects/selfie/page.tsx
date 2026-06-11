@@ -1,9 +1,24 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
+  Brain,
+  Smartphone,
+  Server,
+  ShieldCheck,
+  Cloud,
+  FileCheck,
+  AlertTriangle,
+  ArrowRight,
+  Gauge,
+  ServerCog,
+  MessageSquare,
+  Sparkles,
+  TrendingUp,
+  Target,
+  CheckCircle2,
   Wallet,
   ShieldAlert,
   MapPin,
@@ -88,10 +103,61 @@ const features = [
     image: "/selfie/history-screen.png",
   },
 ];
-
+const sections = [
+  ["01", "Problem", "problem"],
+  ["02", "Solution", "solution"],
+  ["03", "Technical", "technical"],
+  ["04", "Design", "design"],
+  ["05", "Workflow", "workflow"],
+  ["06", "Iterations", "iterations"],
+  ["07", "Validation", "validation"],
+  ["08", "Delivered", "delivered"],
+  ["09", "Future", "future"],
+  ["10", "Reflection", "reflection"],
+];
 
 export default function SelfieCaseStudyPage() {
   const [activeFeature, setActiveFeature] = useState(0);
+  const [activeSection, setActiveSection] = useState("problem");
+
+  useEffect(() => {
+  const handleScroll = () => {
+    let currentSection = "problem";
+
+    sections.forEach(([, , id]) => {
+      const element = document.getElementById(id);
+
+      if (element) {
+        const rect = element.getBoundingClientRect();
+
+        if (rect.top <= 180) {
+          currentSection = id;
+        }
+      }
+    });
+
+    setActiveSection(currentSection);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  handleScroll();
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+  const scrollToSection = (id: string) => {
+  const element = document.getElementById(id);
+
+  if (!element) return;
+
+  const y = element.getBoundingClientRect().top + window.scrollY - 80;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth",
+  });
+};
+  
 
   return (
     <main className="min-h-screen bg-[#F7FBFF] text-slate-900">
@@ -217,9 +283,57 @@ export default function SelfieCaseStudyPage() {
 
 </section>
 
-        {/* Problem & Opportunity */}
+{/* Section Id */}
+<section className="sticky top-0 z-50 bg-white/90 backdrop-blur border-y border-slate-200">
+  <div className="max-w-7xl mx-auto px-6">
 
-<section className="mx-auto max-w-6xl px-6 pt-8 pb-14">
+    <nav className="flex gap-8 overflow-x-auto py-4 scrollbar-hide">
+
+      {sections.map(([num, label, id]) => (
+        <button
+          key={id}
+          onClick={() => scrollToSection(id)}
+          className="group flex items-center gap-2 whitespace-nowrap transition-all"
+        >
+          <span
+            className={`
+              text-xs font-medium transition-colors
+              ${
+                activeSection === id
+                  ? "text-cyan-600"
+                  : "text-slate-400"
+              }
+            `}
+          >
+            {num}
+          </span>
+
+          <span
+            className={`
+              text-sm font-medium transition-colors
+              ${
+                activeSection === id
+                  ? "text-slate-950"
+                  : "text-slate-500"
+              }
+            `}
+          >
+            {label}
+          </span>
+        </button>
+      ))}
+
+    </nav>
+
+  </div>
+</section>
+
+{/* Problem & Opportunity */}
+
+<section
+  id="problem"
+  className="mx-auto max-w-6xl px-6 pt-8 pb-14"
+>
   <div className="max-w-6xl">
     <p className="mb-3 text-xs font-semibold uppercase tracking-[0.35em] text-cyan-600">
       Problem & Opportunity
@@ -341,8 +455,11 @@ export default function SelfieCaseStudyPage() {
   </div>
 </section>
 
-        {/* Solution Overview */}
-<section className="mx-auto max-w-6xl px-6 py-20 pt-8 pb-14">
+{/* Solution Overview */}
+<section
+  id="solution"
+  className="mx-auto max-w-6xl px-6 py-20 pt-8 pb-14"
+>
   {/* Section Header */}
   <div className="max-w-6xl">
     <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan-700">
@@ -421,7 +538,10 @@ export default function SelfieCaseStudyPage() {
 </section>
 
 {/* Technical Foundation */}
-<section className="mx-auto max-w-6xl px-6 py-24 pt-8 pb-14">
+<section
+  id="technical"
+  className="mx-auto max-w-6xl px-6 py-24 pt-8 pb-14"
+>
   <div className="max-w-6xl">
     <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan-700">
       HOW THE SCREENING ENGINE WORKS
@@ -478,7 +598,10 @@ export default function SelfieCaseStudyPage() {
 </section>
 
 {/* Key Design Decisions */}
-<section className="relative mx-auto max-w-6xl px-6 py-24 pt-8 pb-14">
+<section 
+  id="design"
+  className="relative mx-auto max-w-6xl px-6 py-24 pt-8 pb-14"
+>
 
   <div
     className="
@@ -550,78 +673,871 @@ export default function SelfieCaseStudyPage() {
 
 </section>
 
-      {/* Key Workflow */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="overflow-hidden rounded-[2rem] bg-slate-950 shadow-2xl shadow-slate-300/60">
-          <div className="grid md:grid-cols-[0.9fr_1.2fr]">
-            <div className="p-8 text-white md:p-12">
-              <p className="text-sm font-bold uppercase tracking-[0.25em] text-cyan-300">
-                Product Workflow
+{/* Workflow Design */}
+<section
+  id="workflow"
+  className="mx-auto max-w-6xl px-6 py-16 scroll-mt-24"
+>
+  <div className="overflow-hidden rounded-[2rem] bg-slate-950 shadow-2xl shadow-slate-300/60">
+    <div className="grid md:grid-cols-[0.95fr_1.05fr]">
+      {/* Left Content */}
+      <div className="flex h-full flex-col justify-center p-10 text-white md:p-14">
+        <p className="mb-6 text-sm font-bold uppercase tracking-[0.25em] text-cyan-300">
+          Workflow Design
+        </p>
+
+        <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+          Designing a screening workflow that reduces uncertainty
+        </h2>
+
+        <p className="mb-12 max-w-lg leading-7 text-slate-300">
+          Many users are unfamiliar with oral health screening and may not know
+          how to capture a usable image, what information is important, or how
+          to interpret AI-generated results. The workflow was designed to guide
+          users through each step and translate technical outputs into
+          understandable risk feedback.
+        </p>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Design Challenge
+            </p>
+
+            <div className="space-y-3">
+              {[
+                "Poor-quality oral images reduce reliability",
+                "Images alone cannot capture all risk factors",
+                "AI outputs can be difficult to interpret",
+                "Users need clear guidance after screening",
+              ].map((item) => (
+                <div key={item} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300" />
+                  <p className="text-sm leading-6 text-slate-300">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Design Response
+            </p>
+
+            <div className="space-y-3">
+              {[
+                "Guided image capture",
+                "Contextual questionnaire",
+                "Combined risk assessment",
+                "Visual risk summaries",
+                "History tracking and follow-up",
+              ].map((item, index) => (
+                <div key={item} className="flex items-center gap-3">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-500/20 text-xs font-semibold text-cyan-300">
+                    {index + 1}
+                  </div>
+
+                  <span className="text-sm text-slate-200">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Flow */}
+      <div className="relative min-h-[620px] overflow-hidden bg-gradient-to-br from-[#E0F2FE] via-white to-[#BFDBFE] p-8 md:p-12">
+        <div className="absolute right-[-120px] top-[-120px] h-96 w-96 rounded-full bg-cyan-300/40 blur-3xl" />
+        <div className="absolute bottom-[-120px] left-[-120px] h-96 w-96 rounded-full bg-blue-400/30 blur-3xl" />
+
+        <div className="relative z-10 flex h-full flex-col justify-center">
+          <p className="mb-6 text-sm font-bold uppercase tracking-[0.25em] text-cyan-700">
+            User Journey
+          </p>
+
+          <div className="space-y-4">
+            {[
+              {
+                step: "01",
+                title: "Understand",
+                desc: "User recognizes a concern or wants to check their oral health.",
+              },
+              {
+                step: "02",
+                title: "Capture",
+                desc: "Photo guidance helps users submit a clearer oral image.",
+              },
+              {
+                step: "03",
+                title: "Assess",
+                desc: "Questionnaire context supports risk assessment beyond image data.",
+              },
+              {
+                step: "04",
+                title: "Learn",
+                desc: "Risk levels and recommendations translate results into understandable feedback.",
+              },
+              {
+                step: "05",
+                title: "Track",
+                desc: "Scan history helps users revisit previous screenings and recommendations.",
+              },
+            ].map((item, index) => (
+              <div key={item.step} className="relative">
+                {index < 4 && (
+                  <div className="absolute left-[23px] top-14 h-8 w-px bg-cyan-200" />
+                )}
+
+                <div className="flex gap-4 rounded-3xl border border-white/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cyan-50 text-sm font-bold text-cyan-700">
+                    {item.step}
+                  </div>
+
+                  <div>
+                    <h3 className="font-bold text-slate-950">{item.title}</h3>
+
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-3xl border border-cyan-100 bg-white/80 p-5 backdrop-blur">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700">
+              Design Rationale
+            </p>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              The flow moves from uncertainty to action: helping users capture,
+              assess, understand, and revisit screening information without
+              treating the app as a diagnostic tool.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    {/* Design Iterations Section */}
+<section id="iterations" className="mx-auto max-w-6xl px-6 py-20 pt-8 pb-14">
+  <div className="max-w-6xl mx-auto px-6">
+    {/* Section Header */}
+    <div className="max-w-6xl mb-16">
+      <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
+        Design Iterations
+      </p>
+
+      <h2 className="text-4xl md:text-4xl font-bold text-slate-900 mb-6">
+        Refining the experience through feedback
+      </h2>
+
+      <p className="text-lg text-slate-600 leading-relaxed">
+        Selfie evolved through stakeholder feedback, usability testing, and
+        technical integration. Each iteration focused on reducing friction,
+        improving clarity, and helping users better understand their
+        non-diagnostic oral health risk results.
+      </p>
+    </div>
+
+    {/* Main Iteration Card */}
+    <div className="rounded-[2rem] border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+        {/* Left Panel */}
+        <div className="bg-slate-950 text-white p-10 md:p-12">
+          <p className="text-cyan-300 font-semibold uppercase tracking-wider mb-4">
+            Key Challenge
+          </p>
+
+          <h3 className="text-3xl font-bold mb-6">
+            The questionnaire added useful context, but created workflow
+            friction.
+          </h3>
+
+          <p className="text-slate-300 leading-relaxed text-left mb-8">
+            Early versions collected broader lifestyle and demographic
+            information. While useful for risk estimation, testing showed that
+            the flow felt repetitive and slowed down the scan experience.
+          </p>
+
+          <div className="space-y-4">
+            <div className="rounded-2xl bg-white/10 border border-white/10 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <Target className="w-5 h-5 text-cyan-300" />
+                <p className="text-sm text-slate-400">Design Goal</p>
+              </div>
+
+              <p className="font-semibold leading-relaxed">
+                Reduce cognitive load without removing meaningful risk signals.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white/10 border border-white/10 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <ClipboardList className="w-5 h-5 text-cyan-300" />
+                <p className="text-sm text-slate-400">Product Decision</p>
+              </div>
+
+              <p className="font-semibold leading-relaxed">
+                Prioritize observable oral-health indicators over broad
+                background questions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Panel */}
+        <div className="p-10 md:p-12 bg-gradient-to-br from-white to-cyan-50/40">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Before */}
+            <div className="rounded-3xl border border-slate-200 bg-white p-6">
+              <div className="flex items-center justify-between mb-5">
+                <h4 className="text-lg font-bold text-slate-900">Before</h4>
+
+                <span className="text-xs font-semibold text-slate-500 bg-slate-50 border border-slate-200 px-3 py-1 rounded-full">
+                  Longer Flow
+                </span>
+              </div>
+
+              <ul className="space-y-3 text-slate-600">
+                {[
+                  "Age group",
+                  "Dental visits",
+                  "Hygiene habits",
+                  "Diet sugar",
+                  "Staining habits",
+                  "Dry mouth",
+                  "Systemic health",
+                  "Trauma history",
+                  "Bleeding gums",
+                  "Pain sensitivity",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* After */}
+            <div className="rounded-3xl border border-cyan-200 bg-cyan-50/80 p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-5">
+                <h4 className="text-lg font-bold text-slate-900">After</h4>
+
+                <span className="text-xs font-semibold text-cyan-700 bg-white border border-cyan-200 px-3 py-1 rounded-full">
+                  Refined Flow
+                </span>
+              </div>
+
+              <ul className="space-y-3 text-slate-700">
+                {[
+                  "Missing teeth",
+                  "Last cleaning",
+                  "Red or swollen gums",
+                  "Loose teeth",
+                  "Hard deposits",
+                  "Visible holes",
+                  "Bad breath",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <Sparkles className="w-4 h-4 text-cyan-600 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Full Width Outcome */}
+      <div className="border-t border-slate-200 bg-gradient-to-r from-cyan-50 via-sky-50 to-blue-50 p-8 md:p-10">
+        <div className="flex items-start gap-4 mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-white border border-cyan-200 flex items-center justify-center shrink-0">
+            <TrendingUp className="w-6 h-6 text-cyan-600" />
+          </div>
+
+          <div>
+            <p className="text-cyan-700 text-sm font-semibold uppercase tracking-wider mb-2">
+              Outcome
+            </p>
+
+            <h4 className="text-2xl font-bold text-slate-900">
+              A shorter, clearer, and more focused scan experience
+            </h4>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-4 gap-4">
+          {[
+            "Reduced questionnaire complexity",
+            "Improved workflow clarity",
+            "Focused on observable risk indicators",
+            "Created a more streamlined scan experience",
+          ].map((item) => (
+            <div
+              key={item}
+              className="flex items-start gap-3 rounded-2xl bg-white/80 border border-white p-4"
+            >
+              <CheckCircle2 className="w-5 h-5 text-cyan-600 shrink-0 mt-0.5" />
+              <span className="text-slate-700 leading-relaxed">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+{/* Validation & Testing */}
+<section id="validation" className="scroll-mt-24 py-28 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+    {/* Header */}
+    <div className="max-w-6xl mb-16">
+      <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
+        Validation & Testing
+      </p>
+
+      <h2 className="text-4xl font-bold text-slate-900 mb-6">
+        Testing the experience beyond the happy path
+      </h2>
+
+      <p className="text-lg text-slate-600 leading-relaxed">
+        Beyond implementing the core workflow, the project was validated
+        through stakeholder feedback, failure testing, and deployment
+        verification to ensure the experience remained understandable,
+        recoverable, and reliable.
+      </p>
+    </div>
+
+    <div className="space-y-12">
+      {/* User Feedback */}
+      <div className="rounded-[2rem] border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="p-10 md:p-14">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center">
+              <MessageSquare className="w-5 h-5 text-cyan-600" />
+            </div>
+
+            <p className="text-cyan-700 font-semibold uppercase tracking-[0.18em]">
+              User Feedback
+            </p>
+          </div>
+
+          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight max-w-4xl mb-6">
+            Integration demos revealed usability issues in the results experience
+          </h3>
+
+          <p className="text-lg text-slate-600 leading-relaxed max-w-4xl mb-12">
+            Stakeholders found the original results page difficult to scan.
+            Important findings were buried within large blocks of text, making it
+            difficult to quickly understand screening outcomes.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                Problem
               </p>
 
-              <h2 className="mt-3 text-4xl font-bold tracking-tight">
-                How Selfie Works
-              </h2>
+              <p className="text-slate-600 leading-relaxed">
+                Risk information was text-heavy and key findings were buried
+                within dense questionnaire answers.
+              </p>
+            </div>
 
-              <p className="mt-5 max-w-md text-sm leading-7 text-slate-300">
-                Selfie connects guided image capture, questionnaire input,
-                AI-assisted analysis, risk feedback, and scan history into one
-                mobile-first screening flow.
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                Solution
               </p>
 
-              <div className="mt-10 space-y-1">
-                {features.map((feature, index) => (
-                  <button
-                    key={feature.title}
-                    onClick={() => setActiveFeature(index)}
-                    className={`w-full rounded-2xl px-5 py-4 text-left transition ${
-                      activeFeature === index
-                        ? "bg-white text-slate-950"
-                        : "text-slate-300 hover:bg-white/5 hover:text-white"
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <span
-                        className={`mt-0.5 text-xs font-bold tracking-widest ${
-                          activeFeature === index
-                            ? "text-cyan-600"
-                            : "text-slate-500"
-                        }`}
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-
-                      <div>
-                        <p className="text-sm font-semibold">{feature.title}</p>
-
-                        {activeFeature === index && (
-                          <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500">
-                            {feature.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </button>
+              <div className="space-y-3">
+                {[
+                  "Color-coded risk levels",
+                  "Visual risk summaries",
+                  "Recommendations instead of raw answers",
+                  "Scan timestamps",
+                  "Removal of demo-only elements",
+                  "Reduced text density",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-cyan-600 shrink-0" />
+                    <span className="text-slate-700">{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="relative min-h-[560px] overflow-hidden bg-gradient-to-br from-[#E0F2FE] via-white to-[#BFDBFE]">
-              <div className="absolute right-[-120px] top-[-120px] h-96 w-96 rounded-full bg-cyan-300/40 blur-3xl" />
-              <div className="absolute bottom-[-120px] left-[-120px] h-96 w-96 rounded-full bg-blue-400/30 blur-3xl" />
+            <div className="rounded-2xl bg-gradient-to-br from-cyan-50 to-sky-50 border border-cyan-100 p-6 h-full">
+              <p className="text-xs uppercase tracking-[0.15em] text-cyan-700 font-semibold mb-3">
+                Result
+              </p>
 
-              <div className="relative z-10 flex h-full items-center justify-center p-10">
-                <img
-                  src={features[activeFeature].image}
-                  alt={features[activeFeature].title}
-                  className="max-h-[500px] w-auto object-contain drop-shadow-2xl"
-                />
+              <h4 className="text-xl font-semibold text-slate-900 mb-3">
+                Faster risk recognition
+              </h4>
+
+              <p className="text-slate-600 leading-relaxed">
+                Users were able to identify key oral health risks more quickly
+                while the simplified presentation reduced cognitive load.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 border-t border-slate-200 p-4 md:p-6">
+          <Image
+            src="/selfie/validation/integration-feedback.png"
+            alt="Integration Demo Feedback"
+            width={2000}
+            height={1200}
+            className="w-full h-auto rounded-3xl shadow-xl border border-slate-200"
+          />
+        </div>
+      </div>
+
+      {/* Error Recovery */}
+      <div className="rounded-[2rem] border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="p-10 md:p-14">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-sky-600" />
+            </div>
+
+            <p className="text-sky-700 font-semibold uppercase tracking-[0.18em]">
+              Error Recovery
+            </p>
+          </div>
+
+          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight max-w-4xl mb-6">
+            Users needed clear feedback when submissions failed
+          </h3>
+
+          <p className="text-lg text-slate-600 leading-relaxed max-w-4xl mb-12">
+            Network interruptions and backend failures can occur in real-world
+            conditions. Validation focused on ensuring that users understood what
+            happened and how to recover.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                Scenarios Tested
+              </p>
+
+              <p className="text-slate-600 leading-relaxed">
+                Simulated endpoint failures, invalid requests, and network
+                interruptions during questionnaire submission.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                Validation
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  "Backend endpoint failures",
+                  "Submission request errors",
+                  "Network interruption scenarios",
+                  "User-facing error messages",
+                  "Recovery and retry workflows",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-sky-600 shrink-0" />
+                    <span className="text-slate-700">{item}</span>
+                  </div>
+                ))}
               </div>
+            </div>
+
+            <div className="rounded-2xl bg-gradient-to-br from-sky-50 to-cyan-50 border border-sky-100 p-6 h-full">
+              <p className="text-xs uppercase tracking-[0.15em] text-sky-700 font-semibold mb-3">
+                Impact
+              </p>
+
+              <h4 className="text-xl font-semibold text-slate-900 mb-3">
+                Clear recovery path
+              </h4>
+
+              <p className="text-slate-600 leading-relaxed">
+                Users received actionable feedback and could retry submissions
+                instead of being left uncertain about system status.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 border-t border-slate-200 p-4 md:p-6">
+          <Image
+            src="/selfie/validation/error-recovery.png"
+            alt="Error Recovery Validation"
+            width={2000}
+            height={1200}
+            className="w-full h-auto rounded-3xl shadow-xl border border-slate-200"
+          />
+        </div>
+      </div>
+
+      {/* Secure Deployment */}
+      <div className="rounded-[2rem] border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="p-10 md:p-14">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 text-blue-600" />
+            </div>
+
+            <p className="text-blue-700 font-semibold uppercase tracking-[0.18em]">
+              Secure Deployment
+            </p>
+          </div>
+
+          <h3 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight max-w-4xl mb-6">
+            The deployed system was validated through HTTPS communication
+          </h3>
+
+          <p className="text-lg text-slate-600 leading-relaxed max-w-4xl mb-12">
+            End-to-end testing verified that image uploads, questionnaire
+            responses, and analysis requests could travel securely between the
+            mobile application and backend service.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                What Was Verified
+              </p>
+
+              <p className="text-slate-600 leading-relaxed">
+                Secure communication between the deployed frontend and backend
+                environment using TLS-protected HTTPS endpoints.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs uppercase tracking-[0.15em] text-slate-400 font-semibold mb-4">
+                Validation
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  "TLS / HTTPS verification",
+                  "Frontend-backend communication",
+                  "Image upload requests",
+                  "Questionnaire payload transfer",
+                  "End-to-end API workflow",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                    <span className="text-slate-700">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-100 p-6 h-full">
+              <p className="text-xs uppercase tracking-[0.15em] text-blue-700 font-semibold mb-3">
+                Impact
+              </p>
+
+              <h4 className="text-xl font-semibold text-slate-900 mb-3">
+                Secure end-to-end screening workflow
+              </h4>
+
+              <p className="text-slate-600 leading-relaxed">
+                Successfully validated a complete image-to-result screening
+                workflow through a deployed backend service.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 border-t border-slate-200 p-4 md:p-6">
+          <Image
+            src="/selfie/validation/tls-validation.png"
+            alt="TLS Validation"
+            width={2000}
+            height={1200}
+            className="w-full h-auto rounded-3xl shadow-xl border border-slate-200"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* What Was Delivered */}
+<section id="delivered" className="scroll-mt-24 py-28 bg-slate-50">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="max-w-6xl mb-16">
+      <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
+        What Was Delivered
+      </p>
+
+      <h2 className="text-4xl font-bold text-slate-900 mb-6">
+        A complete image-to-result oral health screening workflow
+      </h2>
+
+      <p className="text-lg text-slate-600 leading-relaxed">
+        The final prototype integrated mobile image capture, questionnaire
+        input, AI-assisted risk assessment, result visualization, scan history,
+        and secure backend communication.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-4 gap-6 mb-16">
+      {[
+        {
+          icon: Brain,
+          title: "4 Conditions",
+          desc: "Calculus, caries, gingivitis, and tooth discoloration screening.",
+        },
+        {
+          icon: Smartphone,
+          title: "Mobile Workflow",
+          desc: "End-to-end scan flow from image capture to risk results.",
+        },
+        {
+          icon: Server,
+          title: "AI + Backend",
+          desc: "Image analysis and questionnaire data processed through FastAPI.",
+        },
+        {
+          icon: ShieldCheck,
+          title: "Secure API",
+          desc: "HTTPS backend communication validated during deployment.",
+        },
+      ].map((item) => {
+        const Icon = item.icon;
+
+        return (
+          <div
+            key={item.title}
+            className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-cyan-50 flex items-center justify-center mb-6">
+              <Icon className="w-6 h-6 text-cyan-600" />
+            </div>
+
+            <h3 className="text-xl font-bold text-slate-900 mb-3">
+              {item.title}
+            </h3>
+
+            <p className="text-slate-600 leading-relaxed">
+              {item.desc}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+
+    <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
+      <p className="text-sm font-semibold uppercase tracking-wider text-cyan-700 mb-3">
+        Final Product
+      </p>
+
+      <h3 className="text-2xl font-bold text-slate-900 mb-8">
+        Key screens from the completed prototype
+      </h3>
+
+      <div className="grid md:grid-cols-4 gap-6">
+        {[
+          {
+            src: "/selfie/landing.jpg",
+            label: "Landing",
+          },
+          {
+            src: "/selfie/questionnaire.jpg",
+            label: "Questionnaire",
+          },
+          {
+            src: "/selfie/results-screen.jpg",
+            label: "Risk Results",
+          },
+          {
+            src: "/selfie/feature-history.jpg",
+            label: "Scan History",
+          },
+        ].map((screen) => (
+          <div key={screen.label}>
+            <Image
+              src={screen.src}
+              alt={screen.label}
+              width={800}
+              height={1600}
+              className="rounded-2xl border border-slate-200 shadow-md w-full h-auto"
+            />
+
+            <p className="mt-3 text-center text-sm text-slate-600">
+              {screen.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* Future Improvements */}
+<section id="delivered" className="scroll-mt-24 py-28 bg-slate-50">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="max-w-6xl mb-16">
+      <p className="text-cyan-700 font-semibold uppercase tracking-wider mb-4">
+        Future Improvements
+      </p>
+
+      <h2 className="text-4xl font-bold text-slate-900 mb-6">
+        Extending Selfie beyond the high-fidelity prototype
+      </h2>
+
+      <p className="text-lg text-slate-600 leading-relaxed">
+        Several planned features were moved to future iterations to prioritize
+        a stable core workflow, validated API integration, and a complete demo
+        experience within the project timeline.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-6">
+      {[
+        {
+          icon: Cloud,
+          title: "Cloud Infrastructure",
+          current: "Current implementation stores user data locally.",
+          items: [
+            "Cloud account storage",
+            "Cross-device synchronization",
+            "Persistent user profiles",
+            "Scalable backend architecture",
+          ],
+        },
+        {
+          icon: FileCheck,
+          title: "Compliance & Privacy",
+          current: "Current system includes Terms & Conditions acknowledgement.",
+          items: [
+            "Timestamped consent records",
+            "Version-controlled agreements",
+            "Audit trails",
+            "Improved regulatory traceability",
+          ],
+        },
+        {
+          icon: Accessibility,
+          title: "Accessibility Enhancements",
+          current: "User feedback highlighted accessibility and comfort needs.",
+          items: [
+            "Color-blind friendly palettes",
+            "Dark mode support",
+            "Voice assistance",
+            "Expanded WCAG 2.1 AA support",
+          ],
+        },
+      ].map((item) => {
+        const Icon = item.icon;
+
+        return (
+          <div
+            key={item.title}
+            className="rounded-[2rem] border border-slate-200 bg-gradient-to-br from-white to-cyan-50/50 p-8 shadow-sm"
+          >
+            <div className="w-12 h-12 rounded-2xl bg-white border border-cyan-100 flex items-center justify-center mb-6">
+              <Icon className="w-6 h-6 text-cyan-600" />
+            </div>
+
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">
+              {item.title}
+            </h3>
+
+            <p className="text-slate-600 leading-relaxed mb-6">
+              {item.current}
+            </p>
+
+            <div className="space-y-3">
+              {item.items.map((point) => (
+                <div key={point} className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-cyan-600 shrink-0 mt-0.5" />
+                  <span className="text-slate-700">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+      
+      {/* Reflection Section */}
+      <section id="reflection" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl font-bold text-slate-900">
+              Reflection
+            </h2>
+            <p className="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
+              Key lessons learned throughout the design, development, and
+              evaluation of Selfie.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="rounded-3xl border border-sky-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl mb-4">📊</div>
+
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                Data Integrity Matters
+              </h3>
+
+              <p className="text-slate-600 leading-relaxed">
+                Dataset inconsistencies highlighted how sensitive machine
+                learning systems are to labeling quality. Addressing uncertain
+                labels required adapting the training process and reinforced
+                the importance of early validation and stakeholder alignment.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="rounded-3xl border border-sky-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl mb-4">🔄</div>
+
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                Iteration Takes Time
+              </h3>
+
+              <p className="text-slate-600 leading-relaxed">
+                Integrating user feedback, mobile development, backend
+                communication, and testing required more time than initially
+                planned. Continuous iteration ultimately resulted in a more
+                refined and user-centered experience.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="rounded-3xl border border-sky-100 bg-white p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-4xl mb-4">💡</div>
+
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                Human-Centered AI
+              </h3>
+
+              <p className="text-slate-600 leading-relaxed">
+                Building Selfie demonstrated that successful healthcare
+                technology depends on more than model performance. User trust,
+                accessibility, workflow simplicity, and clear communication
+                are equally important for creating meaningful experiences.
+              </p>
             </div>
           </div>
         </div>
       </section>
-
     </main>
   );
 }
@@ -757,6 +1673,7 @@ function TechnicalCard({
     </div>
   );
 }
+
 
 function DecisionCard({
   number,
